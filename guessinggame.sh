@@ -1,36 +1,49 @@
 #!/usr/bin/env bash
-# File: guessinggame.sh
+# File: guessinggame.sh by J Ahmed Zamindar
+
+analyse_result_function()
+
+{
+	correctguess=`ls -1 | wc -l`
+
+	randomfigures='^[0-9]+$'
+
+	if ! [[ $1 =~ $randomfigures ]]; then
+
+		echo "Please enter a valid numeric figure."
+
+	elif [[ $1 -lt $correctguess ]]; then
+
+		echo "Sorry, $1 was TOO LOW. Please guess a HIGHER number:"
+
+
+	elif [[ $1 -gt $correctguess ]]; then
+
+		echo "Sorry, $1 was TOO HIGH. Please guess a LOWER number:"
+
+
+	elif [[ $1 -eq $correctguess ]];
+
+	then 
+
+		echo "Congratulations, you guessed correct! $1 is the correct number of files in the directory."
+
+		echo "Total Guess Attempts: $amount_OF_guesses." 
+
+	exit
+
+	fi
+}
 
 clear
-correctguess=999
-amountOFguesses=0
+amount_OF_guesses=1
 
 echo "Guess how many files are in the current directory"
 
 while read response; do
-if [[ $response -eq $correctguess ]]; 
-then break; 
 
-else function welldone {
+analyse_result_function $response;
 
- echo "Congratulations, you guessed correct! "
-
-}
-
-if [[ $response -lt $correctguess ]]; then 
-echo "Sorry, $response was TOO LOW. Please guess a HIGHER number:"
-let amountOFguesses+=1
-
-
-elif [[ $response -gt $correctguess ]]; then
-echo "Sorry, $response was TOO HIGH. Please guess a LOWER number:"
-let amountOFguesses+=1
-fi 
-fi
+((amount_OF_guesses++))
 
 done
-
-welldone && 
-echo "$response was the correct number of files in the directory." &&
-echo "You took guessed in $amountOFguesses tries."
-
